@@ -1,6 +1,8 @@
 
-let humanScore = 0;
-let computerScore = 0;
+let humanScore		= 0;
+let computerScore	= 0;
+
+const buttons	= document.querySelectorAll(".button");
 
 const getComputerChoice = () => {
 	let dice = Math.random();
@@ -8,23 +10,21 @@ const getComputerChoice = () => {
 	console.log( dice);
 	if( dice <= 0.3){
 		result = "rock";
-		console.log("Es Piedra");
 	}else if ( dice <= 0.6){
 		result = "paper";
-		console.log("Es Papel");
 	}else if ( dice < 1){
-		result = "scissor";
-		console.log("Es Tijera");
+		result = "scissors";
 	}
-
+	console.log("Computer Choice: " + result);
 	return result;
 }
 
 
-const getHumanChoice = () => {
+const getHumanChoice = (buttonChoice) => {
 	let userInput;
-	userInput = prompt("Rock, Paper, Scissors, Shoot!").toLowerCase();
-	console.log(userInput);
+	/* userInput = prompt("Rock, Paper, Scissors, Shoot!").toLowerCase(); */
+	userInput = buttonChoice;
+	console.log("Human Choice " + userInput);
 	return userInput;
 }
 
@@ -33,32 +33,32 @@ const getHumanChoice = () => {
 const playRound = (humanChoice, computerChoice) => {
 	
 	if (humanChoice == computerChoice){
-		humanScore++;
-		computerScore++;
+		humanScore;
+		computerScore;
 	}else if (humanChoice == "paper"  && computerChoice == "rock"){
 		humanScore++;
-	}else if (humanChoice == "paper"  && computerChoice == "scissor"){
+	}else if (humanChoice == "paper"  && computerChoice == "scissors"){
 		computerScore++;
-	}else if (humanChoice == "rock"  && computerChoice == "scissor"){
+	}else if (humanChoice == "rock"  && computerChoice == "scissors"){
 		humanScore++;
 	}else if (computerChoice == "paper"  && humanChoice == "rock"){
 		computerScore++;
-	}else if (computerChoice == "paper"  && humanChoice == "scissor"){
+	}else if (computerChoice == "paper"  && humanChoice == "scissors"){
 		humanScore++;
-	}else if (computerChoice == "rock"  && humanChoice == "scissor"){
+	}else if (computerChoice == "rock"  && humanChoice == "scissors"){
 		computerScore++;
 	}
 }
 
 
-const playGame = () => {
+const playGame = (buttonHumanChoice) => {
 	let i = 0;
-	while (i < 5){
+	while (i < 1){
 		const computerSelection = getComputerChoice();
-		const humanSelection  = getHumanChoice();
+		const humanSelection  = getHumanChoice(buttonHumanChoice);
 		playRound(humanSelection, computerSelection);
-		console.log(humanScore);
-		console.log(computerScore);
+		console.log("Computer: " + computerScore);
+		console.log("Humano: " +humanScore);
 		console.log(`Round ${i}`);
 		i++;
 	}
@@ -68,16 +68,19 @@ const playGame = () => {
 	}else if (humanScore > computerScore){
 		console.log("Tú ganas");
 	}else {
-		console.log("Machine gana");
+		console.log("Computer gana");
 	}
 }
 
-playGame();
 
 
-/* papel > rock 
-papel < scissor
-rock > scissor */
 
+
+buttons.forEach((btn) => {
+	btn.addEventListener( "click", () => {
+		let buttonChoice = btn.innerText.toLowerCase();
+		playGame(buttonChoice);
+	});
+})
 
 
