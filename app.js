@@ -2,7 +2,10 @@
 let humanScore		= 0;
 let computerScore	= 0;
 
-const buttons	= document.querySelectorAll(".button");
+const buttons								= document.querySelectorAll(".button");
+const displayHumanScore			= document.querySelector("#humanScore");
+const displayComputerScore	= document.querySelector("#computerScore");
+const promptWinner 					= document.querySelector("#promptWinner");
 
 const getComputerChoice = () => {
 	let dice = Math.random();
@@ -53,6 +56,7 @@ const playRound = (humanChoice, computerChoice) => {
 
 const playGame = (buttonHumanChoice) => {
 	let i = 0;
+	let promptResult = "";
 	while (i < 1){
 		const computerSelection = getComputerChoice();
 		const humanSelection  = getHumanChoice(buttonHumanChoice);
@@ -63,13 +67,16 @@ const playGame = (buttonHumanChoice) => {
 		i++;
 	}
 
-	if (humanScore == computerScore){
-		console.log("Nadie gana");
-	}else if (humanScore > computerScore){
-		console.log("Tú ganas");
-	}else {
-		console.log("Computer gana");
+	if ( humanScore == 5 || computerScore == 5){
+		if (humanScore == computerScore){
+			promptResult = "It's a Tie!";
+		}else if (humanScore > computerScore){
+			promptResult = "Human Wins!";
+		}else {
+			promptResult = "Computer Wins!";
+		}
 	}
+	promptWinner.innerText = promptResult;
 }
 
 
@@ -80,7 +87,9 @@ buttons.forEach((btn) => {
 	btn.addEventListener( "click", () => {
 		let buttonChoice = btn.innerText.toLowerCase();
 		playGame(buttonChoice);
+		displayHumanScore.innerText = humanScore;
+		displayComputerScore.innerText = computerScore;
 	});
-})
+});
 
 
